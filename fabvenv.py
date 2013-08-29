@@ -8,7 +8,7 @@ from fabric.contrib.files import exists
 
 
 # THE MODULE VERSION
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Venv(object):
@@ -65,7 +65,7 @@ class Venv(object):
 
         # download the latest virtualenv.
         with cd(self.venv):
-            run('git clone https://github.com/pypa/virtualenv')
+            run('git clone --quiet https://github.com/pypa/virtualenv')
 
         # create the virtual environment
         # Need to run virtualenv.py from the repo directory, so it

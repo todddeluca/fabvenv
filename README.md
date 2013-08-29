@@ -67,4 +67,18 @@ def venv_pth():
 
 Pull requests and issues are welcomed.
 
+## Testing
+
+The file `tests/fabfile.py` is a basic test of using fabric and fabvenv to
+create a virtual environment, install a package, upgrade a package, and remove
+the virtual environment.
+
+To run this test, you must have fabric installed, and you must be able to
+do passwordless (keypair) ssh into localhost as `$USER`, I assume.
+
+Run the tests as follows:
+
+    cd tests/
+    fab test_fabvenv
+
 
