@@ -8,19 +8,22 @@ from fabric.contrib.files import exists
 
 
 # THE MODULE VERSION
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 
 
 class Venv(object):
 
-    def __init__(self, venv, requirements=None):
+    def __init__(self, venv, requirements=None, virtualenv='virtualenv'):
         '''
         venv: The (remote) path to a virtual environment.
         requirements: The (local) path to a requirements.txt file, for use with
         pip.
+        virtualenv: The (remote) path or name of the virtualenv executable that
+        is used to create the venv.  Defaults to 'virtualenv'.
         '''
         self.venv = venv
         self.requirements = requirements
+        self.virtualenv = virtualenv
 
     def bin(self):
         '''
@@ -48,13 +51,11 @@ class Venv(object):
         '''
         return exists(self.venv) and exists(self.python())
 
-    def create(self, python='python'):
+    def create(self):
         '''
-        On the remote host, download the latest virtualenv installation from
-        github and create a virtual environment using it.  The venv directory
-        MUST NOT already exist.
-        python: path or name of python executable to use to create the venv.
-        Defaults to 'python'.
+        On the remote host, use an installed virtualenv executable (e.g. the
+        globally installed virtualenv on the path) to create a virutal
+        environment.  The venv directory MUST NOT already exist.
         '''
         # require that the venv does not yet exist.
         if self.exists():
@@ -63,16 +64,8 @@ class Venv(object):
         # create the venv dir
         run('mkdir -p {}'.format(self.venv))
 
-        # download the latest virtualenv.
-        with cd(self.venv):
-            run('git clone --quiet https://github.com/pypa/virtualenv')
-
         # create the virtual environment
-        # Need to run virtualenv.py from the repo directory, so it
-        # successfully installs pip and setuptools using the archives in
-        # virtualenv_support/
-        with cd(os.path.join(self.venv, 'virtualenv')):
-            run('{} virtualenv.py --distribute {}'.format(python, self.venv))
+        run('{virtualenv} {venv}'.format(virtualenv=self.virtualenv, venv=self.venv))
 
     def install(self):
         '''
