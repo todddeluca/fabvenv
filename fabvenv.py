@@ -8,7 +8,7 @@ from fabric.contrib.files import exists
 
 
 # THE MODULE VERSION
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 
 class Venv(object):

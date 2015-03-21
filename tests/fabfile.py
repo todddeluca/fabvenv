@@ -43,7 +43,7 @@ def venv_create():
     require('configured')
     venv = fabvenv.Venv(venv_dir(), requirements_file())
     if not venv.exists():
-        venv.create(sys.executable)
+        venv.create()
 
 
 @task

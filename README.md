@@ -73,12 +73,27 @@ The file `tests/fabfile.py` is a basic test of using fabric and fabvenv to
 create a virtual environment, install a package, upgrade a package, and remove
 the virtual environment.
 
-To run this test, you must have fabric installed, and you must be able to
-do passwordless (keypair) ssh into localhost as `$USER`, I assume.
+This tests uses an installed version of `fabric` and `fabvenv`.  To avoid
+having the test conflict with any other installation of `fabvenv`, use a
+virtual environment for testing.
+
+Clone fabvenv:
+
+    git clone git@github.com:todddeluca/fabvenv.git
+    cd fabvenv
+
+Install fabric and fabvenv into a virtual environment:
+
+    virtualenv ~/tmp/venv
+    ~/tmp/venv/bin/pip install fabric
+    ~/tmp/venv/bin/pip install -e .
+
+The test also assumes that you can do passwordless (keypair) ssh into localhost
+as `$USER`.
 
 Run the tests as follows:
 
     cd tests/
-    fab test_fabvenv
+    ~/tmp/venv/bin/fab test_fabvenv
 
 
